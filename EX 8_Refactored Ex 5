@@ -1,0 +1,37 @@
+// замечание: тест можно ещё опитимизировать, если объединить метод показа экрана онбордина и свайп в одном методе, но такой вариант мне кажется более оптимальным, 
+т.к. он создает метод поиска экрана с использованием id+текста и может применятся в других тестах 
+
+@Test
+        //HW ex 5
+        public void testSwipeLeftOnboarding ()
+        {
+            MyListsPageObject MyListsPageObject = new MyListsPageObject(driver);
+            MyListsPageObject.waitForScreenToAppearByName("The Free Encyclopedia\n…in over 300 languages");
+            MainPageObject.swipeRightToLeft(500);
+            MyListsPageObject.waitForScreenToAppearByName("New ways to explore");
+            MainPageObject.swipeRightToLeft(500);
+            MyListsPageObject.waitForScreenToAppearByName("Reading lists with sync");
+            MainPageObject.swipeRightToLeft(500);
+            MyListsPageObject.waitForScreenToAppearByName("Send anonymous data");
+            MyListsPageObject.waitForButtonByIdAndClick("Accept");
+            MyListsPageObject.waitForScreenToAppearById("org.wikipedia:id/fragment_main_coordinator");
+        }
+
+ONBOARDINGSCREEN_BY_NAME_TPL = "//*[@resource-id='org.wikipedia:id/scrollViewContainer']//*[@text='{TEXT}']",
+
+   //
+    public void waitForScreenToAppearByName(String text)
+    {
+        String xpath = ONBOARDINGSCREEN_BY_NAME_TPL.replace("{TEXT}", text);
+        this.waitForElementPresent(
+                By.xpath(xpath),
+                "Onboarding screen has no title" + ONBOARDINGSCREEN_BY_NAME_TPL,
+                15
+        );
+    }
+    //
+    public void waitForScreenToAppearById(String screen_id)
+    {
+        this.waitForElementPresent(By.id(screen_id), "Cannot find screen by id " + screen_id, 15);
+    }
+    //
