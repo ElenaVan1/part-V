@@ -1,0 +1,22 @@
+ @Test
+        //for HW Ex 6_correct
+        public void testAssertElementPresentByTitle ()
+        {
+            SearchPageObject SearchPageObject = new SearchPageObject(driver);
+
+            SearchPageObject.initSearchInput();
+            SearchPageObject.typeSearchLine("Java");
+            SearchPageObject.clickByArticleBySubstring("Java (programming language)");
+
+            MyListsPageObject MyListsPageObject = new MyListsPageObject(driver);
+            MyListsPageObject.waitForArticleTitleElementToBePresent();
+        }
+
+    public void waitForArticleTitleElementToBePresent()
+    {
+        String title_xpath;
+        title_xpath = ARTICLE_TITLE_ELEMENT;
+
+        this.waitForElementPresent(By.xpath(title_xpath),
+                "Article title element is not present",
+                15);
